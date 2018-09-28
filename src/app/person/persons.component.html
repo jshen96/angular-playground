@@ -1,0 +1,45 @@
+<div class = "jumbotron container well">
+  <div class = "persons">
+    <h2 align = "center"> {{person.firstName}}'s Profile </h2>
+    <br>
+    <div class = "form-group">
+      <label>First Name : <input [(ngModel)] = "person.firstName" placeholder="firstName" type = "text" class = "form-control"></label>
+      <label>Last Name : <input [(ngModel)] = "person.lastName" placeholder="lastName" type = "text" class = "form-control"></label><br>
+      <label>Tell Us about yourself : <textarea [(ngModel)] = "person.description" placeholder="description" type = "text" class = "form-control"></textarea></label><br>
+    </div>
+    <span *ngIf = "person.firstName"
+    [innerHTML] = "'hello ' +person.firstName"> </span>
+
+    <div class = "profile container well">
+      <p align = "center"><strong>Personal Info</strong></p>
+
+      <div class = "profile-content">
+      <div class = "profile-userpic" align = "center" *ngIf = "person.imgUrl">
+        <img src="src/app/photos/me.jpg" alt="me.jpg">
+      </div>
+      <h4 class = "profile-usertitle"> {{person.firstName}} {{person.lastName}}</h4>
+      <blockquote>{{person.description}}</blockquote>
+        <p class = "badge" *ngIf = "person.bestFriend">Best Friend : {{person.bestFriend}}</p>
+        <div *ngIf = "person.friends.length == 0">
+          <span>{{person.firstName}} has no friends :(</span>
+        </div>
+        <ul class = "list-group"><h4>Friends.</h4>
+          click one any to select your best friend
+          <li class = "list-group-item" *ngFor = "let item of person.friends"
+          #myFriend
+          (click) = "onSelect(item,myFriend)"
+          >
+          <span class="badge" *ngIf = "item.name == person.bestFriend"> best friend! </span>{{item.name}}
+        </li>
+      </ul>
+
+      <div class = "form-group">
+        <label>Friend's Name : <input #friendName type = "text" class = "form-control"></label>
+        <label>Friend's ID :   <input #friendId type = "text" class = "form-control"></label><br>
+      </div>
+      <button class="btn btn-primary"
+      (click) = "addFriend(friendName,friendId)"> Add Friend </button><br>
+    </div>
+  </div>
+</div>
+</div>
